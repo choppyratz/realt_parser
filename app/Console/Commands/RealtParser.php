@@ -12,7 +12,7 @@ class RealtParser extends Command
      *
      * @var string
      */
-    protected $signature = 'run:Realt';
+    protected $signature = 'run:Realt {startPage?}';
 
     /**
      * The console command description.
@@ -39,6 +39,6 @@ class RealtParser extends Command
     public function handle()
     {
         $parser = new Parser();
-        $parser->run();
+        $parser->run($this->argument('startPage'));
     }
 }

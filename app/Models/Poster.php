@@ -12,6 +12,7 @@ class Poster extends Model
     public $timestamps = false;
     protected $table = 'posters';
     protected $fillable = [
+                    'id',
                     'name', 
                     'description', 
                     'link',
@@ -25,14 +26,4 @@ class Poster extends Model
                     'region',
                     'price_id'
                 ];
-
-    public function saveOrUpdatePoster() {
-        var_dump($this->attributes);
-        $poster = Poster::where('code', $this->code)->first();
-        if ($poster == null) {
-            $this->save();
-        }else {
-            Poster::where('code', $this->code)->update($this->attributes);
-        }
-    }
 }

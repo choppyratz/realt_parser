@@ -4,5 +4,5 @@ namespace App\Parsers;
 
 interface iParser 
 {
-    public function run();
+    public function run($maxPages);
 }
