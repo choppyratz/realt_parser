@@ -29,6 +29,10 @@
                         <td>Область</td>
                         <td>{{ poster.poster.region }}</td>
                     </tr>
+                    <tr>
+                        <td>Цена</td>
+                        <td>{{ poster.poster.price }} {{ poster.poster.signature }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

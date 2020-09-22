@@ -21,7 +21,7 @@ class Poster extends Model
                     'update_date',
                     'contact_face',
                     'email',
-                    'address',
+                    'adress',
                     'city',
                     'region',
                     'price_id'

@@ -12,7 +12,7 @@ class PosterController extends Controller
     public function getPosters(Request $request){
         if (isset($request->id)) {
             $result = [];
-            $result['poster'] =  Poster::where('id', $request->id)->first();
+            $result['poster'] =  Poster::where('posters.id', $request->id)->join('prices', 'posters.price_id', 'prices.id')->select('posters.*', 'prices.signature')->first();
             $result['images'] = Image::where('poster_id', $result['poster']->id)->get();
             return response()->json([
                 'poster' => $result
@@ -23,27 +23,26 @@ class PosterController extends Controller
                 $posters = Poster::where('city', $request->city);
             }
 
-            $params  = [ ];
             if (isset($request->priceFrom)) {
-                $params[] = ['price', '>', $request->priceFrom];
+                if (!is_null($posters)) {
+                    $posters = $posters->where('price', '>', $request->priceFrom);
+                }else {
+                    $posters = Poster::where('price', '>', $request->priceFrom);
+                }
             }
 
             if (isset($request->priceTo)) {
-                $params[] = ['price', '<', $request->priceTo];
-            }
-
-            if (!empty($params)) {
                 if (!is_null($posters)) {
-                    $posters = $posters->where('price', $params);
+                    $posters = $posters->where('price', '<', $request->priceTo);
                 }else {
-                    $posters = Poster::where('price', $params);
+                    $posters = Poster::where('price', '<', $request->priceTo);
                 }
             }
             
             if (!is_null($posters)) {
-                $posters = $posters->paginate($request->perPage);
+                $posters = $posters->join('prices', 'posters.price_id', 'prices.id')->select('posters.*', 'prices.signature')->paginate($request->perPage);
             }else {
-                $posters = Poster::paginate($request->perPage);
+                $posters = Poster::join('prices', 'posters.price_id', 'prices.id')->select('posters.*', 'prices.signature')->paginate($request->perPage);
             }
 
             foreach ($posters as $poster) {

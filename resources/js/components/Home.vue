@@ -24,7 +24,7 @@
                     <div class="poster_img p-2">
                         <img v-bind:src="poster.image" alt="">
                         <div class="poster_price p3 text-center pt-2 pb-2 mt-2">
-                            {{ poster.price }} руб/сутки
+                            {{ poster.price }} {{ poster.signature }}
                         </div>
                     </div>
                     <div class="poster_info p-2">
@@ -76,7 +76,7 @@
         methods: {
             getPosterURI() {
                 
-                let tempUri = this.posterURI + '?page=' + this.page;
+                let tempUri = this.posterURI + '?page=' + this.page + '&perPage=' + this.perPage;
                 let filterTempUri = this.filterURI + 'page-' + this.page;
                 
                 if (this.city != 'Все города') {
@@ -86,14 +86,14 @@
 
                 if (this.priceFrom != null && this.priceFrom != '') {
                     tempUri += '&priceFrom=' + this.priceFrom;
-                    filterTempUri += '/prieFrom-' + this.priceFrom;
+                    filterTempUri += '/priceFrom-' + this.priceFrom;
                 }
 
                 if (this.priceTo != null && this.priceTo != '') {
                     tempUri += '&priceTo=' + this.priceTo;
                     filterTempUri += '/priceTo-' + this.priceTo;
                 }
-
+                console.log([tempUri, filterTempUri]);
                 return [tempUri, filterTempUri];
             },
             filter() {
@@ -107,6 +107,7 @@
                     }
                 }).then( response => {
                     this.posters = response.data.poster.data;
+                    console.log(this.posters);
                     this.lastPage = response.data.poster.last_page;
                     this.setPages();
                 }).catch( error => {

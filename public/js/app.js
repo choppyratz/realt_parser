@@ -1986,7 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getPosterURI: function getPosterURI() {
-      var tempUri = this.posterURI + '?page=' + this.page;
+      var tempUri = this.posterURI + '?page=' + this.page + '&perPage=' + this.perPage;
       var filterTempUri = this.filterURI + 'page-' + this.page;
 
       if (this.city != 'Все города') {
@@ -1996,7 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.priceFrom != null && this.priceFrom != '') {
         tempUri += '&priceFrom=' + this.priceFrom;
-        filterTempUri += '/prieFrom-' + this.priceFrom;
+        filterTempUri += '/priceFrom-' + this.priceFrom;
       }
 
       if (this.priceTo != null && this.priceTo != '') {
@@ -2004,6 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
         filterTempUri += '/priceTo-' + this.priceTo;
       }
 
+      console.log([tempUri, filterTempUri]);
       return [tempUri, filterTempUri];
     },
     filter: function filter() {
@@ -2019,6 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.posters = response.data.poster.data;
+        console.log(_this.posters);
         _this.lastPage = response.data.poster.last_page;
 
         _this.setPages();
@@ -2117,6 +2119,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
 //
 //
 //
@@ -54353,7 +54359,9 @@ var render = function() {
                     _vm._v(
                       "\n                        " +
                         _vm._s(poster.price) +
-                        " руб/сутки\n                    "
+                        " " +
+                        _vm._s(poster.signature) +
+                        "\n                    "
                     )
                   ]
                 )
@@ -54525,6 +54533,18 @@ var render = function() {
             _c("td", [_vm._v("Область")]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm.poster.poster.region))])
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", [_vm._v("Цена")]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(_vm.poster.poster.price) +
+                  " " +
+                  _vm._s(_vm.poster.poster.signature)
+              )
+            ])
           ])
         ])
       ])
