@@ -13,7 +13,7 @@ class RealtParser implements iParser
 {
     private $baseURI = 'https://realt.by/rent/flat-for-day/?page=';
     private $startPage = 0;
-    private $maxPage = 2;
+    private $maxPage = -1;
 
     public function run($startPage) {
         if (!is_null($startPage)) {

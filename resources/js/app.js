@@ -17,7 +17,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            redirect: '/home/page-1/city-all/priceFrom-none/priceTo-none'
+            redirect: '/home/page-1/'
         },
         {
             path: '/poster/:id',

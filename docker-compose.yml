@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  web:
+    build: ./
+    environment:
+      - APACHE_RUN_USER=#1000
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8097:80
+    working_dir: /var/www/html
+
+  db:
+    image: mariadb
+    #restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: realt
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 9097:80
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  dbdata:
+    driver: local
+
+
+
+
